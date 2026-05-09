@@ -141,12 +141,12 @@ class Tournament:
     self.name = name
     self.groups = groups
 
-    Yellow_x_Blue =  MatchPattern(TeamColor.Yellow, TeamColor.Blue)
+    Yellow_x_Blue  = MatchPattern(TeamColor.Yellow, TeamColor.Blue)
     Yellow_x_Green = MatchPattern(TeamColor.Yellow, TeamColor.Green)
-    Yellow_x_Red =   MatchPattern(TeamColor.Yellow, TeamColor.Red)
-    Blue_x_Green =   MatchPattern(TeamColor.Blue,   TeamColor.Green)
-    Blue_x_Red =     MatchPattern(TeamColor.Blue,   TeamColor.Red)
-    Green_x_Red =    MatchPattern(TeamColor.Green,  TeamColor.Red)
+    Yellow_x_Red   = MatchPattern(TeamColor.Yellow, TeamColor.Red)
+    Blue_x_Green   = MatchPattern(TeamColor.Blue,   TeamColor.Green)
+    Blue_x_Red     = MatchPattern(TeamColor.Blue,   TeamColor.Red)
+    Green_x_Red    = MatchPattern(TeamColor.Green,  TeamColor.Red)
 
     self.roundPatterns = [
       RoundPattern(Yellow_x_Blue, Green_x_Red),
