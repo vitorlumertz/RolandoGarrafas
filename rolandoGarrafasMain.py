@@ -28,6 +28,14 @@ kTeamNames = {
 }
 
 
+kTeamsIcons = {
+  TeamColor.Yellow: '🟡',
+  TeamColor.Blue:   '🔵',
+  TeamColor.Green:  '🟢',
+  TeamColor.Red:    '🔴',
+}
+
+
 @dataclass
 class MatchPattern:
   team1: TeamColor
@@ -66,7 +74,9 @@ class Match:
   groupName: str
 
   def __str__(self) -> str:
-    return f'{self.groupName}: {self.double1} x {self.double2}'
+    d1 = self.double1
+    d2 = self.double2
+    return f'{self.groupName}: {kTeamsIcons[d1.team]} {d1} x {d2} {kTeamsIcons[d2.team]}'
 
 
 @dataclass
@@ -218,3 +228,17 @@ class Tournament:
       matchesStr += f'\n{round}'
 
     return matchesStr
+
+
+  @staticmethod
+  def __WriteInFile(filePath:str, content:str) -> None:
+    with open(filePath, 'x', encoding='utf-8') as file:
+      file.write(content)
+
+
+  def WriteTeams(self, filePath:str) -> None:
+    Tournament.__WriteInFile(filePath, self.GetTeamsStr())
+
+
+  def WriteMatches(self, filePath:str) -> None:
+    Tournament.__WriteInFile(filePath, self.GetMatchesStr())

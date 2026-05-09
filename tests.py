@@ -29,8 +29,8 @@ def CreateGroups(groupsLength:int) -> rg.Groups:
 def TestFromGroups(groups:rg.Groups) -> None:
   tournament = rg.Tournament('Test', groups)
   tournament.DrawGroups()
-  print(tournament.GetTeamsStr())
-  print(tournament.GetMatchesStr())
+  tournament.WriteTeams(f'TestData\\{tournament.name} - Equipes.txt')
+  tournament.WriteMatches(f'TestData\\{tournament.name} - Jogos.txt')
 
 
 def TestFromScratch() -> None:
