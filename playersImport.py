@@ -26,7 +26,3 @@ def GetGroups(filePath:str, groupPrefix:str="Group") -> rg.Groups:
     groups[groupName] = rg.Group(groupName, groupPlayers)
 
   return groups
-
-
-if __name__ == "__main__":
-  GetGroups("TestData\\PlayersTest1.csv")

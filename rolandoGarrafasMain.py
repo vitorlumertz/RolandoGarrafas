@@ -52,6 +52,7 @@ class RoundPattern:
 class Player:
   name: str
   isSeed: bool
+  team: TeamColor|None = None
 
   def __str__(self):
     return self.name
@@ -126,7 +127,11 @@ class Group:
     random.shuffle(self.seeds)
     random.shuffle(self.nonSeeds)
     for i, team in enumerate(TeamColor):
-      self.doubles[team] = Double(self.seeds[i], self.nonSeeds[i], team)
+      player1 = self.seeds[i]
+      player2 = self.nonSeeds[i]
+      player1.team = team
+      player2.team = team
+      self.doubles[team] = Double(player1, player2, team)
 
     self.isDrawn = True
 
@@ -144,6 +149,11 @@ class Group:
     match1 = self.__GetMatch(pattern.pattern1)
     match2 = self.__GetMatch(pattern.pattern2)
     return match1, match2
+
+
+  def GetPlayerByTeam(self, team:TeamColor, seed:bool) -> Player:
+    double = self.doubles[team]
+    return double.player1 if seed else double.player2
 
 
 class Tournament:

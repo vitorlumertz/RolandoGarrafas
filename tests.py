@@ -1,3 +1,4 @@
+from interface import TouranentApp
 from playersImport import GetGroups
 import rolandoGarrafasMain as rg
 
@@ -44,6 +45,15 @@ def TestFromCsv(filePath:str) -> None:
   TestFromGroups(groups)
 
 
+def TestGraphicalInterface(tournamentName:str, title:str) -> None:
+  app = TouranentApp(tournamentName, title)
+  app.mainloop()
+
+
 if __name__ == '__main__':
   TestFromScratch()
   TestFromCsv("TestData\\PlayersTest1.csv")
+
+  tournamentName = "38º Rolando Garrafas"
+  title = "SORTEIO DO 38° ROLANDO GARRAFAS - 2026"
+  TestGraphicalInterface(tournamentName, title)
