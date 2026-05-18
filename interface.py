@@ -140,7 +140,7 @@ class TouranentApp(tk.Tk):
 
 
   def __CreateTitle(self, title:str) -> None:
-    label = self.__CreateLabel(title, 38)
+    label = self.__CreateLabel(title, 32)
     label.grid(row=0, column=0, columnspan=5, pady=0)
 
 
