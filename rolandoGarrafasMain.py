@@ -1,7 +1,10 @@
 from dataclasses import dataclass
-from enum import Enum
 from typing import Literal
 import random
+
+from teams import TeamColor, kTeamNames, kTeamsIcons
+from googleSheetsUtils import GoogleSheetsConnection
+import googleSheetsExport as gse
 
 
 type GroupName = str
@@ -10,30 +13,6 @@ type Team         = dict[GroupName, Double]
 type Teams        = dict[TeamColor, Team]
 type GroupDoubles = dict[TeamColor, Double]
 type Groups       = dict[GroupName, Group]
-
-
-class TeamColor(Enum):
-  Yellow = 1
-  Blue = 2
-  Green = 3
-  Red = 4
-
-
-# PT-BR
-kTeamNames = {
-  TeamColor.Yellow: 'Equipe Amarela',
-  TeamColor.Blue:   'Equipe Azul',
-  TeamColor.Green:  'Equipe Verde',
-  TeamColor.Red:    'Equipe Vermelha',
-}
-
-
-kTeamsIcons = {
-  TeamColor.Yellow: '🟡',
-  TeamColor.Blue:   '🔵',
-  TeamColor.Green:  '🟢',
-  TeamColor.Red:    '🔴',
-}
 
 
 @dataclass
@@ -151,6 +130,13 @@ class Group:
     return match1, match2
 
 
+  def GetAllMatches(self) -> list[Match]:
+    matches = []
+    for round in range(3):
+      matches.extend(list(self.GetMatches(round)))
+    return matches
+
+
   def GetPlayerByTeam(self, team:TeamColor, seed:bool) -> Player:
     double = self.doubles[team]
     return double.player1 if seed else double.player2
@@ -252,3 +238,8 @@ class Tournament:
 
   def WriteMatches(self, filePath:str) -> None:
     Tournament.__WriteInFile(filePath, self.GetMatchesStr())
+
+
+  def ExportMatchesToGoogleSheets(self, sheetTitle:str, folderId:str) -> None:
+    gsConnection = GoogleSheetsConnection(sheetTitle, folderId)
+    gse.ExportMatches(self, gsConnection)

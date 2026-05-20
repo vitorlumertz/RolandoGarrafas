@@ -27,11 +27,12 @@ def CreateGroups(groupsLength:int) -> rg.Groups:
   return groups
 
 
-def TestFromGroups(groups:rg.Groups) -> None:
+def TestFromGroups(groups:rg.Groups) -> rg.Tournament:
   tournament = rg.Tournament('Test', groups)
   tournament.DrawGroups()
   tournament.WriteTeams(f'TestData\\{tournament.name} - Equipes.txt')
   tournament.WriteMatches(f'TestData\\{tournament.name} - Jogos.txt')
+  return tournament
 
 
 def TestFromScratch() -> None:
@@ -50,6 +51,12 @@ def TestGraphicalInterface(tournamentName:str, title:str) -> None:
   app.mainloop()
 
 
+def TestMatchesExportToGoogleSheets(filePath:str, sheetTitle:str, folderId:str) -> None:
+  groups = GetGroups(filePath, kGroupPrefix)
+  tournament = TestFromGroups(groups)
+  tournament.ExportMatchesToGoogleSheets(sheetTitle, folderId)
+
+
 if __name__ == '__main__':
   TestFromScratch()
   TestFromCsv("TestData\\PlayersTest1.csv")
@@ -57,3 +64,8 @@ if __name__ == '__main__':
   tournamentName = "38º Rolando Garrafas"
   title = "SORTEIO DO 38° ROLANDO GARRAFAS - 2026"
   TestGraphicalInterface(tournamentName, title)
+
+  filePath = "TestData\\PlayersTest1.csv"
+  sheetTitle = "Jogos RG 2026"
+  folderId = "1ip2Hxdph4uYPSQBPbOlfhxz28cOwS3CI"
+  TestMatchesExportToGoogleSheets(filePath, sheetTitle, folderId)
